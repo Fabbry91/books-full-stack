@@ -3,18 +3,21 @@ const { Router } = require("express");
 const router = Router();
 
 const {
-    getLibro,
+    getLibroById,
     getLibros,
     postLibro,
     putLibro,
     deleteLibro,
+    pagination
 } = require('../controllers/libroControllers');
 
 // obtengo metodos para aplicar a los controladores 
 router.get("/", getLibros);
-router.get("/:id", getLibro);
+router.get("/:id", getLibroById);
 router.post("/",postLibro);
 router.put("/:id",putLibro);
 router.delete("/:id",deleteLibro);
+
+router.post("/pagination",pagination);
 
 module.exports = router;
