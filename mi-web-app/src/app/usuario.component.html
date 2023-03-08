@@ -1,0 +1,12 @@
+<h1>hola </h1>
+{{usuarioNombre}}
+
+<input type="text" [(ngModel)]="usuarioNombre">
+
+<button (click)="onAgregarUsuario()">
+  Agregar
+</button>
+
+<div *ngFor="let usr of usuarios">
+  <span>{{usr}}</span>
+</div>

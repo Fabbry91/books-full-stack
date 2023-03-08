@@ -68,13 +68,12 @@ const deleteLibro = async (req, res = response, next) => {
     }
 }
 
-const pagination = async (req, res = response, next) => {
+const pagination = async (req, res, next) => {
     try {
-        console.log(req.body)
         //ordenamiento
         const sort = req.body.sort;
         //ascendente o descendente
-        const sortDirection = req.body.sortDirection;
+        const sortDireccion = req.body.sortDireccion;
         //paginas
         const page = parseInt(req.body.page);
         //tamaño de paginacion
@@ -88,46 +87,44 @@ const pagination = async (req, res = response, next) => {
         let totalRecord = 0;
 
         if (req.body.filterValue) {
-            console.log("entra")
             filterValor = req.body.filterValue.valor;
             filterPropiedad = req.body.filterValue.propiedad;
 
             libros = await Libro.find({
                 [filterPropiedad]: new RegExp(filterValor, "i")
             })
-                .sort({ [sort]: sortDirection })
-                .skip((page - 1 * pageSize))
+                .sort({ [sort]: sortDireccion })
+                .skip((page - 1) * pageSize)
                 .limit(pageSize)
 
             totalRecord = await Libro.find({
                 [filterPropiedad]: new RegExp(filterValor, "i")
-            }).count();
+            }).countDocuments();
 
         } else {
             //traemos todos los libros, los ordenamos y odenamos ascendente o descendente
-            libro = await Libro.find()
-                .sort({ [sort]: sortDirection })
-                .skipt((page - 1) * pageSize) //indica desde donde quiero empezar a leer;
+            libros = await Libro.find()
+                .sort({ [sort]: sortDireccion })
+                .skip((page - 1) * pageSize) //indica desde donde quiero empezar a leer;
                 .limit(pageSize) //intervalo final
-
-            totalRecord = await Libro.find().count(); // cuenta la cantidad de datos guardado
+            totalRecord = await Libro.countDocuments(); // cuenta la cantidad de datos guardado
         }
 
-        const pageQuantity = totalRecord / pageSize;
+        const pageQuantity = Math.ceil(totalRecord / pageSize);
 
         res.status(200).json({
             status: 200,
             pageSize,
             page,
             sort,
-            sortDirection,
+            sortDireccion,
             pageQuantity,
             totalRecord,
             data: libros,
         })
 
     } catch (error) {
-        next(new ErrorResponse(`No funsiona la paginacion ${req.params.id}`, 400))
+        next(new ErrorResponse(`No funciona la paginacion ${req.params.id}`, 400))
     }
 }
 

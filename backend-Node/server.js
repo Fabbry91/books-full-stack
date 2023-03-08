@@ -1,6 +1,7 @@
 const dotenv = require('dotenv');
 const express = require('express');
 const morgan = require('morgan');
+const cors= require('cors')
 const connectDataBase = require('./config/baseDatos');
 const errorHandler = require('./middleware/error')
 
@@ -11,6 +12,7 @@ connectDataBase();
 
 const app = express();
 app.use(express.json());
+app.use(cors)
 
 //delaro el puerto
 const PORT = process.env.PORT || 5000;
