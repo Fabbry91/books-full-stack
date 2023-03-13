@@ -1,0 +1,12 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="onMenuToggleDispatch()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Libro Market</span>
+  <div style="display: flex; gap:10px; justify-content: flex-end; width: 100%;">
+    <a *ngIf="!statusUser" routerLink="/register">Registro</a>
+    <a *ngIf="!statusUser" routerLink="/login">Login</a>
+    <a *ngIf="statusUser" routerLink="/">Home</a>
+    <a *ngIf="statusUser" (click)="logOut()" routerLink="/">Log out</a>
+  </div>
+</mat-toolbar>

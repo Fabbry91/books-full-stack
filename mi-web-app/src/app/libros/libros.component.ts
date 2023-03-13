@@ -9,12 +9,14 @@ import { Subscription } from 'rxjs';
 })
 export class LibrosComponent implements OnInit, OnDestroy {
 
-  libros: string[] = []
+  libros: string[] = [];
+  private libroSubscriton: Subscription = new Subscription();
 
-  constructor(private libServ: LibrosService, private libroSubscriton: Subscription) {
+  constructor(private libServ: LibrosService) {
   }
 
   ngOnInit(): void {
+    this.libros = this.libServ.obtenerLibros();
     this.libroSubscriton = this.libServ.librosSubject.subscribe(() => {
       this.libros = this.libServ.obtenerLibros();
     })

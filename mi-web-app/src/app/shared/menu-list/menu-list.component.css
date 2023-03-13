@@ -1,0 +1,14 @@
+a{
+  text-decoration: none;
+  color: #ffff;
+}
+
+a:hover,
+a:active {
+  color: #dbcde6;
+}
+
+.list-label {
+  display: inline-block;
+  padding-left: 6px;
+}
